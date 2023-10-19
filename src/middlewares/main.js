@@ -33,19 +33,18 @@ export function checkAdmin(req, res, next) {
   }
 }
 
-export function checkUser(req, res, next) {
-
-  if (req.session?.user?.role == "user") {
+export async function checkUser(req, res, next) {
+  const admin = req.session?.user?.role === "admin"; 
+  if (req.session?.user?.role === "user") {
     return next();
-  } else{
-    console.log('Entra')
+  } 
+  if (admin) {
+    console.log('req.session.user.role', req.session.user.role);
     const isUser = "Debes ser usuario para realizar esta acción.";
-    console.log('pasa')
-    logger.error("Debes ser usuario para realizar esta acción.");
-
-    return res.status(201).render("error", { isUser });
+    return res.status(401).render("error", { isUser });
   }
 }
+
 
 export async function checkCart(req, res, next) {
   const cartUser = req.session.user.cartId;
@@ -71,6 +70,7 @@ export async function checkTicket(req, res, next) {
 }
 
 export function errorHandler(error, req, res, next) {
+
   switch (error.code) {
     case Errors.ROUTING_ERROR:
       const notFound = "Esta página no existe";
