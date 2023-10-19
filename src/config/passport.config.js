@@ -57,16 +57,17 @@ export function iniPassport() {
       },
     ),
   );
+  var url = `${urlApi}api/sessions/githubcallback`
+  console.log('pasport', d)
   passport.use(
     "github",
     new GitHubStrategy(
       {
         clientID: process.env.GITHUB_CLIENTID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        // callbackURL: "http://localhost:8080/api/sessions/githubcallback",
-        callbackURL: `${urlApi}api/sessions/githubcallback`,
-
+        callbackURL: url,
       },
+      
       async (accesToken, _, profile, done) => {
         try {
           const res = await fetch("https://api.github.com/user/emails", {
