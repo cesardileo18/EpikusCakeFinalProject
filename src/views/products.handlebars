@@ -1,0 +1,120 @@
+<header>
+  <nav class="navbar navbar-expand-xl bg-light px-2">
+    <div class="container-fluid">
+      {{#if firstName}}
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar">
+        <i class="bi bi-list"></i>
+      </button>
+      <p style="margin-bottom: 0px;"><strong>Bienvenido, {{firstName}}. Rol <span id="role"
+            data-user="{{email}}">{{role}}</span></strong></p>
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h3 class="offcanvas-title" id="offcanvasNavbarLabel"><strong>Epikus Cake</strong> <a
+              href="/api/sessions/currentUser" class="btn btn-light ms-3 me-3"><i class="bi bi-person-circle"></i></a>
+            <a href="/api/sessions/logout" class="btn btn-secondary btn-sm btnLogin ms-1 me-4">
+              <i class="bi bi-box-arrow-left me-2"></i>
+            </a>
+          </h3>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex justify-content-xl-evenly">
+          <div class="offcanvas-body-padreNav">
+            <ul class="navbar-nav flex-grow-1 pe-3 gap-xl-5">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/home">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/products">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/test-chat">Chat Box</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users">Users</a>
+              </li>
+              <li class="nav-item nav__contacto">
+                <a class="nav-link" href="/products-admin">Product Admin</a>
+              </li>
+              <li class="nav-item nav__info">
+                <a class="nav-link" href="/purchases">Mis compras</a>
+              </li>
+              <li class="nav-item ">
+                <a href="/api/sessions/logout" class="btn btn-danger btn-sm mt-2 btnLogin deleteIconResponsive">
+                  <i class="bi bi-box-arrow-left "></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </nav>
+</header>
+<main>
+  <div class="floatCartButton">
+    <button class="fixed-bottom-right btn btn-secondary btn-lg me-2">
+      <a id="cartLink" href="/cart/{{cartId}}" class="text-white" style="text-decoration: none;">
+        <i class="bi bi-cart text-white me-2" style="text-decoration: none;"></i>
+        <span>{{cartQuantity}}</span>
+      </a>
+    </button>
+  </div>
+  <div class="d-flex flex-column">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col g-0 d-flex flex-wrap justify-content-center gap-5 mt-5">
+          {{#each plainProducts}}
+          <div class="card" style="width: 15rem; background:  rgba(245, 15, 157, 0.1294117647);">
+            <img src="/{{this.thumbnail}}" class="card-img" alt="{{this.title}}" />
+            <div class="card-body text-center">
+              <div class="card-title">
+                <h4 class="m-0">{{this.title}}</h4>
+              </div>
+              <div class="card-title">
+                <h6 class="m-0">{{this.category}}</h6>
+              </div>
+              <div class="card-description">
+                <p class="m-0 py-2">{{this.description}}</p>
+              </div>
+              <div class="card-price">
+                <p class="m-0">${{this.price}}</p>
+              </div>
+              <div class="card-btn d-flex justify-content-end align-items-end w-100">
+                <button class="btn btn-primary btn-sm me-2 btnCart" data-product-id="{{this._id}}"
+                  data-cart-id="{{cartId}}" data-owner="{{owner}}">Agregar al Carrito</button>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+        <div class="d-flex justify-content-center">
+          <p class="fs-3">
+            {{#if hasPrevPage}}
+            <button style="border: none;" class="btn btn-transparent p-0 mb-1 fs-3">
+              <a href="/products/?pagina=1"><i class="bi bi-arrow-bar-left"></i></a>
+            </button>
+            <button style="border: none" class="btn btn-transparent p-0 mb-1 fs-3">
+              <a href="/products/?pagina={{prevPage}}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+            </button>
+            {{/if}}
+            Pagina:
+            <span class="fw-bold">{{page}}</span>
+            de
+            <span class="fw-bold">{{totalPages}}</span>
+
+            {{#if hasNextPage}}
+            <button style="border: none" class="btn btn-transparent p-0 mb-1 fs-3"><a
+                href="/products/?pagina={{nextPage}}"><i class="bi bi-arrow-right-circle-fill"></i></a></button>
+            <button style="border: none" class="btn btn-transparent p-0 mb-1 fs-3"><a
+                href="/products/?pagina={{totalPages}}"><i class="bi bi-arrow-bar-right"></i></a></button>
+            {{/if}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

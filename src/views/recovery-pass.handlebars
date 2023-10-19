@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col g-0">
+      <div class="bg-image">
+        <div class="contenedorTituloPrincipal-recoveryTokenEmail">
+          <a href="/"><img src="/images/logo.png" class="logo" alt="" /></a>
+          <div class="d-flex justify-content-center align-items-center flex-column"
+            style="border-radius: 20px 20px 20px 20px">
+            <div class="tab-content"style="background: #ee82ee8c;height: 100%;padding: 10px;border-radius: 10px;">    
+              <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+                <div class="text-center text-white">
+                  <p style="margin-bottom: 0px;">Recovery Password</p>
+                </div>
+                <form action="/recovery/pass" method="post" style="width: 300px; padding: 10px;">
+                  <div class="mb-2">
+                    <div class="input-group mt-2">
+                      <span class="input-group-text" id="basic-addon3">
+                        <i class="bi bi-envelope-at" style="width:16px; height: 16px;"></i>
+                      </span>
+                      <input type="email" value="{{validEmail}}" class="form-control" id="inputEmailRegister"
+                        name="email" placeholder="Email" aria-describedby="basic-addon3" />
+                    </div>
+                    <div class="input-group mt-2">
+                      <span class="input-group-text" id="basic-addon4">
+                        <i class="bi bi-eye-slash me-1" style="width:16px; height: 16px;"></i>
+                      </span>
+                      <input type="password" value="{{validToken}}" class="form-control" id="inputEmailRegister"
+                        name="token" placeholder="token" aria-describedby="basic-addon4" />
+                    </div>
+                    <div class="input-group mt-2">
+                      <span class="input-group-text" id="basic-addon4">
+                        <i class="bi bi-eye-slash me-1" style="width:16px; height: 16px;"></i>
+                      </span>
+                      <input type="password" class="form-control" id="inputEmailRegister" name="password"
+                        placeholder="New Password" aria-describedby="basic-addon4" />
+                    </div>
+                    <div class="w-100 mt-4 d-flex justify-content-center align-items-center flex-column text-white">
+                      <button type="submit" class="btn btn-primary btn-block mb-4 w-100">
+                        Send
+                      </button>
+                      <div class="w-100 d-flex justify-content-between align-items-center flex-column gap-1">
+                        <div class="row w-100 text-center">
+                          <p>Are you a member?
+                            <a href="/api/sessions/login">Login</a>
+                          </p>
+                        </div>
+                        <div class="row">
+                          <p>Not a member?
+                            <a href="/api/sessions/register">Register</a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

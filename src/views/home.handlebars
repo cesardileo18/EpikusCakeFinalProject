@@ -1,0 +1,211 @@
+<header>
+    <nav class="navbar navbar-expand-xl bg-light px-2">
+        <div class="container-fluid">
+            {{#if firstName}}
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar">
+                <i class="bi bi-list"></i>
+            </button>
+            <p style="margin-bottom: 0px;"><strong>Bienvenido, {{firstName}}. Rol {{role}}</strong></p>
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h3 class="offcanvas-title" id="offcanvasNavbarLabel"><strong>Epikus Cake</strong> <a
+                            href="/api/sessions/currentUser" class="btn btn-light ms-3 me-3"><i
+                                class="bi bi-person-circle"></i></a>
+                        <a href="/api/sessions/logout" class="btn btn-secondary btn-sm btnLogin ms-1 me-4">
+                            <i class="bi bi-box-arrow-left me-2"></i>
+                        </a>
+                    </h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body d-flex justify-content-xl-evenly">
+                    <div class="offcanvas-body-padreNav">
+                        <ul class="navbar-nav flex-grow-1 pe-3 gap-xl-5">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/home">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/products">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/test-chat">Chat Box</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/users">Users</a>
+                            </li>
+                            <li class="nav-item nav__contacto">
+                                <a class="nav-link" href="/products-admin">Product Admin</a>
+                            </li>
+                            <li class="nav-item nav__info">
+                                <a class="nav-link" href="/purchases">Mis compras</a>
+                            </li>
+                            <li class="nav-item ">
+                                <a href="/api/sessions/logout"
+                                    class="btn btn-danger btn-sm mt-2 btnLogin deleteIconResponsive">
+                                    <i class="bi bi-box-arrow-left "></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </nav>
+</header>
+<main class="d-flex flex-column">
+    <div class="container-fluid">
+        <div class="row">
+            <section class="nosotros col-12 mb-3">
+                <div class="page-header my-3">
+                    <h1 class="text-center">Nosotros</h1>
+                </div>
+                <article>
+                    Somos una empresa familiar dedicada al mundo de la repostería, pastelería y panadería.
+                    Nos caracterizamos por hacer tus momentos únicos e inolvidables, formando parte de tus
+                    alegrías. Antes de realizar cualquier entrega, realizamos las pruebas pertinentes para
+                    garantizar la entrega de un producto de calidad.
+                </article>
+            </section>
+            <section class="imgNosotros col-lg-12 col-md-12 d-flex my-2 p-2">
+                <div class="imagen1 img__nosotros__parallax d-flex justify-content-center">
+                </div>
+            </section>
+            <section class="nosotrosArticleChef col-lg-12 col-md-12">
+                <div class="page-header my-3">
+                    <h2 class="text-center">Chef Epikus</h2>
+                </div>
+                <div class="contenedorPadreBiografia ">
+                    <article>
+                        Con el paso del tiempo, y con el apoyo de su familia y su novio, quien actualmente 
+                        es su esposo y el padre de su hija, decidieron emigrar a Argentina en 2016 en busca
+                        de una mejor calidad de vida debido a la situación en su país. Fue en Argentina 
+                        donde pudo consolidar sus conocimientos al estudiar Pastelería Profesional de la
+                        mano de su ídolo, Oswaldo Gross, en el Instituto Argentino de Gastronomía (IAG),
+                        culminando su formación de manera exitosa. Fue a raíz de esta experiencia que 
+                        nació Epikus Cake, un emprendimiento 100% familiar y artesanal que se especializa
+                        en trabajar con los mejores productos del mercado.
+                    </article>
+                </div>
+            </section>
+            <section class="baCelebra mb-5 ">
+                <div class="page-header my-3">
+                    <h2 class="text-center">BA Celebra Venezuela 2022</h2>
+                </div>
+                <div class="contenedorPadreBiografia ">
+                    <article class="mb-5">
+                        Una experiencia verdaderamente única, en la que nos encontramos rodeados de miles de personas disfrutando
+                        de nuestra gastronomía y postres.
+                    </article>
+                    <div class="imagen2 img__nosotros__parallax"></div>
+                </div>
+            </section>
+            <section class="reacciones mb-3 rounded-4">
+                <div class="page-header my-3">
+                    <h2 class="text-center mb-3">Reacciones</h2>
+                    <div class="contenedorVideos d-flex flex-column align-items-center">
+                        <video src="/videos/video1.mp4" class="mb-4 rounded-4" controls></video>
+                        <video src="/videos/video2.mp4" class="mb-4 rounded-4" controls></video>
+                        <video src="/videos/video3.mp4" class="mb-4 rounded-4" controls></video>
+                        <video src="/videos/video4.mp4" class="mb-4 rounded-4" controls></video>
+                    </div>
+                </div>
+            </section>
+            <section class="cards">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="page-header my-3">
+                            <h3 class="text-center">Trabajos personalizados</h3>
+                        </div>
+                        <div class="d-flex justify-content-evenly flex-wrap mb-5">
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/minios.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/ariel.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/nba.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/play.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/et.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/minecrasft.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/sebas.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/mujerMaravilla.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/halowen.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/lol.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/rugrats.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/chocoTorta.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/chocoRosa.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="thumbnail m-3 p-3">
+                                    <img src="/images/trabajosPersonalizados/up.jpeg"
+                                        class="card-img-top thumbnail__img" alt="imagen pasteleria">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </section>
+        </div>
+    </div>
+</main>

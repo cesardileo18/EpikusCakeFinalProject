@@ -1,0 +1,410 @@
+openapi: 3.0.0
+info:
+  title: Documentación de la API de Carritos de Compra
+  version: 1.0.0
+
+paths:
+  # Rutas relacionadas con los carritos de compra
+  /api/carts:
+    get:
+      summary: Obtiene todos los carritos de compra
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Los carritos de compra fueron devueltos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta (success en este caso)
+                  payload:
+                    type: array
+                    items:
+                      $ref: "#components/schemas/Cart"
+              example:
+                status: success
+                payload:
+                  - id: "rXkhi1VhHkN0Qg84MFadluaTU"
+                    products: []
+                    __v: 0
+                  - id: "zOTWOAXfvgqCVTWg2OUxNxRHc"
+                    products: []
+                    __v: 0
+                  # ... (otros objetos similares)
+        "500":
+          description: Error del servidor. Usualmente generando la query o falla la conexión a la DB
+
+  /api/carts/{cartId}:
+    get:
+      summary: Obtiene un carrito de compra por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra que se busca
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Carrito de compra encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta (success en este caso)
+                  payload:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: ID del carrito de compra
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product:
+                              type: string
+                              description: ID del producto en el carrito
+                            quantity:
+                              type: number
+                              description: Cantidad del producto en el carrito
+                            _id:
+                              type: string
+                              description: ID del producto en el carrito (opcional)
+                      __v:
+                        type: integer
+                        description: Versión del documento (opcional)
+                example:
+                  status: success
+                  payload:
+                    _id: "24ISUqlbuagnI9TAMxJjXjWt7"
+                    products:
+                      - product: "647b6a4f2a2deaefe1fc284c"
+                        quantity: 1
+                        _id: "652006e79286a3a234cb8718"
+                      - product: "647b6a562a2deaefe1fc284e"
+                        quantity: 1
+                        _id: "652008148703f0fe29257154"
+                    __v: 2
+        "500":
+          description: Error del servidor. Usualmente generando la query o falla la conexión a la DB
+
+    put:
+      summary: Actualizar cantidades o productos de un carrito de compra a través de su ID
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra que se desea actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/UpdateCartRequest"
+      responses:
+        "200":
+          description: El carrito de compra fue actualizado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/CartResponse"
+        "500":
+          description: Error del servidor. Usualmente falla la actualización o la conexión a la base de datos
+      examples:
+        successResponse:
+          summary: Respuesta exitosa
+          value:
+            status: success
+            message: Cart updated successfully
+            cart:
+              _id: "24ISUqlbuagnI9TAMxJjXjWt7"
+              products:
+                - product: "647b6a4f2a2deaefe1fc284c"
+                  quantity: 8
+                  _id: "652021aa53dc321b9a6b7d46"
+                - product: "647b6a0c2a2deaefe1fc283c"
+                  quantity: 2
+                  _id: "652021c353dc321b9a6b7d4f"
+                - product: "647b6a4f2a2deaefe1fc284c"
+                  quantity: 8
+                  _id: "652021c353dc321b9a6b7d50"
+              __v: 11
+
+    delete:
+      summary: Vacía un carrito de compra por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra que se desea eliminar
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Carrito de compra eliminado exitosamente
+        "500":
+          description: Error del servidor. Usualmente falla la eliminación o la conexión a la base de datos
+      requestBodies:
+        clearCart:
+          description: Cuerpo de la solicitud para limpiar el carrito
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/SuccessResponse"
+      examples:
+        successResponse:
+          summary: Respuesta exitosa
+          value:
+            status: success
+            message: Cart cleared successfully
+
+  /api/carts/{cartId}/products/{productId}:
+    post:
+      summary: Agrega un producto al carrito de compra mediante el ID del carrito y el ID del producto
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra al que se desea agregar el producto
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto a agregar al carrito
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto agregado exitosamente al carrito de compra
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta (success en este caso)
+                  payload:
+                    type: object
+                    properties:
+                      cart:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            description: ID del carrito de compra
+                          products:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                product:
+                                  type: string
+                                  description: ID del producto en el carrito
+                                quantity:
+                                  type: number
+                                  description: Cantidad del producto en el carrito
+                                _id:
+                                  type: string
+                                  description: ID del producto en el carrito (opcional)
+                          __v:
+                            type: integer
+                            description: Versión del documento (opcional)
+                      cartQuantity:
+                        type: integer
+                        description: Cantidad de carritos creados
+                example:
+                  status: success
+                  payload:
+                    cart:
+                      _id: "yq4XLXuLFL5WNBF7pVunNxQYl"
+                      products:
+                        - product: "647b6a0c2a2deaefe1fc283c"
+                          quantity: 1
+                          _id: "6520040582d80d8f338e2024"
+                      __v: 4
+                    cartQuantity: 1
+        "500":
+          description: Error del servidor. Usualmente falla la búsqueda por ID o no pasa la validación de campos requeridos
+
+    put:
+      summary: Actualizar la cantidad de un producto específico a través de su ID
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra que se busca
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se desea actualizar
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/UpdateProductQuantity"
+      responses:
+        "200":
+          description: El carrito de compra fue actualizado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Estado de la respuesta (success in this case)
+                  message:
+                    type: string
+                    description: Mensaje de éxito
+                  cart:
+                    type: object
+                    properties:
+                      _id:
+                        type: string
+                        description: ID del carrito de compra
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product:
+                              type: string
+                              description: ID del producto en el carrito
+                            quantity:
+                              type: number
+                              description: Cantidad del producto en el carrito
+                            _id:
+                              type: string
+                              description: ID del producto en el carrito (opcional)
+                      __v:
+                        type: integer
+                        description: Versión del documento (opcional)
+                example:
+                  status: success
+                  message: Product quantity updated
+                  cart:
+                    _id: "24ISUqlbuagnI9TAMxJjXjWt7"
+                    products:
+                      - product: "647b6a4f2a2deaefe1fc284c"
+                        quantity: 5
+                        _id: "652006e79286a3a234cb8718"
+                      - product: "647b6a562a2deaefe1fc284e"
+                        quantity: 1
+                        _id: "652008148703f0fe29257154"
+                    __v: 2
+        "500":
+          description: Error del servidor. Usualmente falla la actualización por no encontrar los ID o la conexión a la base de datos
+
+    delete:
+      summary: Elimina un producto específico del carrito de compra
+      tags:
+        - Carts
+      parameters:
+        - name: cartId
+          in: path
+          required: true
+          description: ID del carrito de compra del cual se eliminará el producto
+          schema:
+            type: string
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se desea eliminar del carrito
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado exitosamente del carrito de compra
+          content:
+            application/json:
+              schema:
+                $ref: "#components/schemas/CartResponse"
+        "500":
+          description: Error del servidor. Usualmente falla la eliminación por no encontrar los ID o la conexión a la base de datos
+      examples:
+        successResponse:
+          summary: Respuesta exitosa
+          value:
+            status: success
+            message: Product removed from cart
+            cart:
+              _id: "24ISUqlbuagnI9TAMxJjXjWt7"
+              products: []
+              __v: 9
+
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        status:
+          type: string
+          description: success or error
+        message:
+          type: string
+          description: aclarando que ocurrió
+      example:
+        status: success
+        message: Carrito de compra actualizado
+    Cart:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID auto generado por mongo para el carrito de compra
+        products:
+          type: array
+          description: Lista de productos en el carrito
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto en el carrito
+              quantity:
+                type: number
+                description: Cantidad del producto en el carrito
+      example:
+        id: "644081a93f0625dc193bc594"
+        products:
+          - product: "12345"
+            quantity: 2
+
+  requestBodies:
+    UpdateProductQuantity:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          description: Cantidad a actualizar para el producto
+      example:
+        quantity: 5

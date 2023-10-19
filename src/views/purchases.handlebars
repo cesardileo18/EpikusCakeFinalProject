@@ -1,0 +1,141 @@
+<header>
+  <nav class="navbar navbar-expand-xl bg-light px-2">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h3 class="offcanvas-title" id="offcanvasNavbarLabel"><strong>Epikus Cake</strong> <a
+              href="/api/sessions/currentUser" class="btn btn-light ms-3 me-3"><i class="bi bi-person-circle"></i></a>
+            <a href="/api/sessions/logout" class="btn btn-secondary btn-sm btnLogin ms-1 me-4">
+              <i class="bi bi-box-arrow-left me-2"></i>
+            </a>
+          </h3>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex justify-content-xl-evenly">
+          <div class="offcanvas-body-padreNav">
+            <ul class="navbar-nav flex-grow-1 pe-3 gap-xl-5">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/home">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/products">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/test-chat">Chat Box</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users">Users</a>
+              </li>
+              <li class="nav-item nav__contacto">
+                <a class="nav-link" href="/products-admin">Product Admin</a>
+              </li>
+              <li class="nav-item nav__info">
+                <a class="nav-link" href="/purchases">Mis compras</a>
+              </li>
+              <li class="nav-item ">
+                <a href="/api/sessions/logout" class="btn btn-danger btn-sm mt-2 btnLogin deleteIconResponsive">
+                  <i class="bi bi-box-arrow-left "></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<main>
+	<div class="title h-25">
+		{{!-- <a href="/home"><img src="/images/logo.png" class="logo" alt="logo" /></a> --}}
+		<h1 class="text-center">{{title}}</h1>
+		<hr />
+	</div>
+	<div class="container-fluid">
+		<div class="row m-auto text-center w-50 d-flex justify-content-center align-items-center" style="gap: 50px;">
+			{{#if formattedTickets.length}}
+				{{#each formattedTickets}}
+					<div class="col princing-item mb-5">
+						<div class="pricing-divider">
+							<h4 class="text-light">Nro de Pedido:</h4>
+							<p class="my-0 display-4 text-light font-weight-normal mb-3 code">{{code}}
+							</p>
+							<svg
+								class="pricing-divider-img"
+								enable-background="new 0 0 300 100"
+								height="100px"
+								id="Layer_1"
+								preserveAspectRatio="none"
+								version="1.1"
+								viewBox="0 0 300 100"
+								width="300px"
+								x="0px"
+								xml:space="preserve"
+								xmlns:xlink="http://www.w3.org/1999/xlink"
+								xmlns="http://www.w3.org/2000/svg"
+								y="0px"
+							>
+								<path
+									class="deco-layer deco-layer--1"
+									d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
+	c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z"
+									fill="#FFFFFF"
+									opacity="0.6"
+								></path>
+								<path
+									class="deco-layer deco-layer--2"
+									d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
+	c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z"
+									fill="#FFFFFF"
+									opacity="0.6"
+								></path>
+								<path
+									class="deco-layer deco-layer--3"
+									d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
+	H42.401L43.415,98.342z"
+									fill="#FFFFFF"
+									opacity="0.7"
+								></path>
+								<path
+									class="deco-layer deco-layer--4"
+									d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
+	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z"
+									fill="#FFFFFF"
+								></path>
+							</svg>
+						</div>
+						<div class="card-body bg-white mt-0 shadow ticket-body">
+							<ul class="list-unstyled wrapper">
+								<li><b>Fecha de Compra: </b>{{purchase_datetime}}</li>
+								<li><b>Productos: </b></li>
+								<li class="innerWrapper"><ul class="list-unstyled list">
+										{{#each products}}
+											<div class="ticketItems">
+												{{!-- <img src="{{image}}" alt="{{title}}" width="100px" /> --}}
+												<div class="ticketTitles">
+													<p><b>Nombre:</b> <br /> {{title}}</p>
+													<p><b>Cantidad:</b> {{quantity}}</p>
+												</div>
+											</div>{{/each}}
+									</ul></li>
+								<li class="totalPurchase"><p>Total de la Compra: $
+										<span>{{amount}}</span>
+										.-</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				{{/each}}
+			{{else}}
+				<p>Aún no realizaste ninguna compra.</p>
+				<a class="text-white btn btn-dark btn-lg mt-2 me-3 w-auto" href="/home" style="text-decoration: none;">
+					Ir al inicio
+				</a>
+			{{/if}}
+		</div>
+	</div>
+</main>

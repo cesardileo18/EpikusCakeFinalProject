@@ -1,0 +1,413 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtiene todos los productos disponibles
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Productos devueltos exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductListResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    payload:
+                      - _id: "647b6a0c2a2deaefe1fc283c"
+                        title: "Pastel de Chocolate"
+                        description: "Delicioso pastel de chocolate"
+                        price: 3000
+                        thumbnail: "./images/img3.jpg"
+                        code: 1003
+                        stock: 97
+                        __v: 0
+                        category: "Repostería"
+                        owner: "cesardileo18@gmail.com"
+                      - _id: "647b6a152a2deaefe1fc283e"
+                        title: "Pastel Red Velvet"
+                        description: "Exquisito pastel Red Velvet"
+                        price: 2300
+                        thumbnail: "./images/img4.jpg"
+                        code: 1004
+                        stock: 72
+                        __v: 0
+                        category: "Repostería"
+                        owner: "cesardileo18@gmail.com"
+                      - _id: "647b6a2f2a2deaefe1fc2844"
+                        title: "Pastel de Fresa"
+                        description: "Pastel de fresa fresca"
+                        price: 2350
+                        thumbnail: "./images/img7.jpg"
+                        code: 1007
+                        stock: 99
+                        __v: 0
+                        category: "Repostería"
+                        owner: "cesardileo18@gmail.com"
+        "500":
+          description: Error del servidor. Usualmente generando la query o falla la conexión a la DB
+    post:
+      summary: Crea un nuevo producto
+      tags:
+        - Products
+      security:
+        - bearerAuth: [] # Asegura que el usuario esté autenticado
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/requestBodies/createProduct"
+      responses:
+        "201":
+          description: Producto creado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Producto Creado
+                    payload:
+                      _id: "65202a558200b2e032fc4cd6"
+                      title: "Nuevo Producto"
+                      description: "Esta es una descripción de prueba"
+                      category: "Electrónica"
+                      price: 29.99
+                      thumbnail: "https://ejemplo.com/imagen.jpg"
+                      code: 1234
+                      stock: 10
+        "400":
+          description: Error de solicitud. Puede ser debido a datos de entrada incorrectos.
+        "401":
+          description: No autorizado. Solo los administradores o usuarios premium pueden realizar esta acción.
+        "500":
+          description: Error del servidor. Usualmente, falla en la creación del producto o no pasa la validación de campos requeridos.
+  /api/products/paginate:
+    get:
+      summary: Obtiene una lista de productos paginados
+      tags:
+        - Products
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Cantidad máxima de productos por página (por defecto 5)
+          schema:
+            type: integer
+            default: 5
+        - name: pagina
+          in: query
+          required: false
+          description: Número de página (por defecto 1)
+          schema:
+            type: integer
+            default: 1
+      responses:
+        "200":
+          description: Productos devueltos exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedProductListResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Mostrando los 5 productos
+                    payload:
+                      - _id: "647b6a0c2a2deaefe1fc283c"
+                        title: "Pastel de Chocolate"
+                        description: "Delicioso pastel de chocolate"
+                        price: 3000
+                        thumbnail: "./images/img3.jpg"
+                        code: 1003
+                        stock: 97
+                        __v: 0
+                        category: "Repostería"
+                        owner: "cesardileo18@gmail.com"
+                      - _id: "647b6a152a2deaefe1fc283e"
+                        title: "Pastel Red Velvet"
+                        description: "Exquisito pastel Red Velvet"
+                        price: 2300
+                        thumbnail: "./images/img4.jpg"
+                        code: 1004
+                        stock: 72
+                        __v: 0
+                        category: "Repostería"
+                        owner: "cesardileo18@gmail.com"
+                      - _id: "647b6a2f2a2deaefe1fc2844"
+                        title: "Pastel de Fresa"
+                        description: "Pastel de fresa fresca"
+                        price: 2350
+                        thumbnail: "./images/img7.jpg"
+                        code: 1007
+                        stock: 99
+                        __v: 0
+                        category: "Repostería"
+                        owner: "cesardileo18@gmail.com"
+                      - _id: "647b6a362a2deaefe1fc2846"
+                        title: "Pastel de Vainilla"
+                        description: "Pastel suave de vainilla"
+                        price: 2350
+                        thumbnail: "./images/img8.jpg"
+                        code: 1008
+                        stock: 99
+                        __v: 0
+                        category: "Repostería"
+                        owner: "adminCoder@coder.com"
+                      - _id: "647b6a402a2deaefe1fc2848"
+                        title: "Pastel de Chocolate y Coco"
+                        description: "Pastel de chocolate y coco"
+                        price: 2350
+                        thumbnail: "./images/img9.jpg"
+                        code: 1009
+                        stock: 97
+                        __v: 0
+                        category: "Repostería"
+                        owner: "adminCoder@coder.com"
+                    totalDocs: 20
+                    totalPages: 4
+                    prevPage: null
+                    nextPage: 2
+                    page: 1
+                    hasPrevPage: false
+                    hasNextPage: true
+                    prevLink: null
+                    nextLink: "/api/products?limit=5&pagina=2"
+  /api/products/{productId}:
+    get:
+      summary: Obtiene un producto por su ID
+      tags:
+        - Products
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: success
+                    msg: Mostrando el producto con id 647b6a152a2deaefe1fc283e
+                    payload:
+                      productById:
+                        _id: "647b6a152a2deaefe1fc283e"
+                        title: "Pastel Red Velvet"
+                        description: "Exquisito pastel Red Velvet"
+                        price: 2300
+                        thumbnail: "./images/img4.jpg"
+                        code: 1004
+                        stock: 72
+                        __v: 0
+                        category: "Repostería"
+                        owner: "adminCoder@coder.com"
+        "500":
+          description: Error del servidor. Usualmente falla la búsqueda por error de ID
+    put:
+      summary: Actualizar un producto a partir del ID
+      tags:
+        - Products
+      security:
+        - bearerAuth: [] # Asegura que el usuario esté autenticado
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#components/schemas/UpdateProductRequest"
+      responses:
+        "200":
+          description: Producto actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: "success"
+                    msg: "Producto actualizado"
+                    payload: "Has actualizado el producto con ID 65202c35121ca31b7bcb502a"
+        "400":
+          description: Error de solicitud. Puede ser debido a datos de entrada incorrectos.
+        "401":
+          description: No autorizado. Solo los administradores o usuarios premium pueden realizar esta acción.
+        "500":
+          description: Error del servidor. Usualmente, falla en la actualización del producto.
+    delete:
+      summary: Elimina un producto por ID
+      tags:
+        - Products
+      security:
+        - bearerAuth: [] # Asegura que el usuario esté autenticado
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID del producto que se desea eliminar
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Producto eliminado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+              examples:
+                successResponse:
+                  summary: Respuesta exitosa
+                  value:
+                    status: "success"
+                    msg: "Producto Eliminado"
+                    payload: "Has eliminado el producto con ID 65202e7ca80d1742cdc67b09"
+        "401":
+          description: No autorizado. Solo los administradores o usuarios premium pueden realizar esta acción.
+        "500":
+          description: Error del servidor. Usualmente, falla en la eliminación del producto.
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        status:
+          type: string
+          description: success or error
+        message:
+          type: string
+          description: aclarando que ocurrió
+      example:
+        status: success
+        message: Producto actualizado
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID auto generado por mongo
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        category:
+          type: string
+          description: Categoría del producto
+        price:
+          type: number
+          description: Precio del producto
+        thumbnail:
+          type: string
+          description: Imagen del producto
+        code:
+          type: number
+          description: Código del producto
+        stock:
+          type: number
+          description: Stock del producto
+        owner:
+          type: number
+          description: Usuario que creó el producto
+      example:
+        _id: "644081a93f0625dc193bc594"
+        title: "Ejemplo de Producto"
+        description: "Descripción del producto"
+        category: "Categoría del producto"
+        price: 19.99
+        thumbnail: "Imagen del producto"
+        code: 12345
+        stock: 100
+        owner: "Usuario que creó el producto"
+  requestBodies:
+    createProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        category:
+          type: string
+          description: Categoría del producto
+        price:
+          type: number
+          description: Precio del producto
+        thumbnail:
+          type: string
+          description: Imagen del producto
+        code:
+          type: number
+          description: Código del producto
+        stock:
+          type: number
+          description: Stock del producto
+      example:
+        title: "Nuevo Producto"
+        description: "Esta es una descripción de prueba"
+        category: "Electrónica"
+        price: 29.99
+        thumbnail: "https://ejemplo.com/imagen.jpg"
+        code: 54321
+        stock: 50
+    updateProduct:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: ID auto generado por mongo
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Descripción del producto
+        category:
+          type: string
+          description: Categoria del producto
+        price:
+          type: number
+          description: Precio del producto
+        thumbnail:
+          type: string
+          description: Imágen del producto
+        code:
+          type: number
+          description: Código del producto
+        stock:
+          type: number
+          description: Stock del producto
+        owner:
+          type: number
+          description: Usuario que creó el producto
+      example:
+        title: "Nuevo Nombre del Producto"
+        price: 29.99

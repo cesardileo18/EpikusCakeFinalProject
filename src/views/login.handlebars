@@ -1,0 +1,50 @@
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="bg-image">
+			<div class="col-12">
+				<div class="col-12 d-flex justify-content-center align-items-center loginForm">
+					<div class="contenedorTituloPrincipal p-4 rounded">
+						<a href="/"><img src="/images/logo.png" class="logo" alt="" /></a>
+						<form action="/api/sessions/login" method="post"
+							style="width: 300px; padding: 10px;background: #ee82ee8c;border-radius: 10px;color: white;">
+							<!-- Tu formulario aquí -->
+							<div class="text-center text-white"
+								style="display: flex;justify-content: center;align-items: center;">
+								<p style="margin-bottom: 0px;">Sign in with</p>
+								<button type="button" class="btn btn-link btn-floating mx-1">
+									<a href="/api/sessions/github"><i class="bi bi-github"style="color: white;font-size: 20px;"></i></a>
+								</button>
+							</div>
+							<div class="form-group">
+								<label for="inputEmail">Email</label>
+								<input type="email" class="form-control" id="inputEmail" name="email"
+									placeholder="Email">
+							</div>
+							<div class="form-group">
+								<label for="inputPassword">Password</label>
+								<input type="password" class="form-control" id="inputPassword" name="password"
+									placeholder="Password">
+							</div>
+							<div class="d-grid gap-2 col-6 mx-auto mt-2">
+								<button type="submit" class="btn btn-primary">Sign in</button>
+							</div>
+							<div class="form-submit">
+								<div class="form-check mt-3">
+									<input type="checkbox" class="form-check-input" id="rememberMe">
+									<label class="form-check-label" for="rememberMe">Remember me</label>
+								</div>
+								<div class="text-center mt-3">
+									<a href="/recovery">Forgot password?</a>
+								</div>
+								<div class="text-center mt-3">
+									Not a member? <a href="/api/sessions/register">Register</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

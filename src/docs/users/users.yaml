@@ -1,0 +1,229 @@
+openapi: 3.0.0
+info:
+  title: API de Usuarios
+  version: 1.0.0
+  description: API para gestionar usuarios.
+
+paths:
+  # Rutas relacionadas con los usuarios
+  /api/users:
+    get:
+      summary: Obtiene una lista de todos los usuarios con información completa.
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Lista de usuarios completa.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta exitosa
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+  /api/users/basic-info:
+    get:
+      summary: Obtiene una lista de usuarios con información básica.
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Lista de usuarios con información básica.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta exitosa
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+  /api/users/{uid}:
+    put:
+      summary: Actualiza un usuario por su ID.
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario que se desea actualizar.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              # Ejemplo de datos a enviar para la actualización
+      responses:
+        "200":
+          description: Usuario actualizado exitosamente.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta exitosa
+        "404":
+          description: No se encontró el usuario con el ID especificado.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+    delete:
+      summary: Elimina un usuario por su ID.
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario que se desea eliminar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Usuario eliminado exitosamente.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta exitosa
+        "404":
+          description: No se encontró el usuario con el ID especificado.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+  /api/users/deleteInactiveUsers:
+    delete:
+      summary: Elimina usuarios inactivos que no se han conectado en los últimos dos días.
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Usuarios inactivos eliminados exitosamente.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta exitosa
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+  /api/users/premium/{uid}:
+    get:
+      summary: Actualiza el estado premium de un usuario por su ID.
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario que se desea actualizar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Estado premium del usuario actualizado exitosamente.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta exitosa
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+  /api/users/role/{uid}:
+    get:
+      summary: Actualiza el rol de un usuario por su ID.
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario que se desea actualizar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Rol del usuario actualizado exitosamente.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta exitosa
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+  /api/users/{uid}/profile:
+    post:
+      summary: Sube una foto de perfil para un usuario. Devuelve un HTML con el perfil del usuario.
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario al que se le actualizará la foto de perfil.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profileImage:
+                  type: string
+                  format: binary
+                  description: Imagen de perfil a subir (formato binario).
+      responses:
+        "200":
+          description: Foto de perfil subida exitosamente.
+          content:
+            text/html:
+              example:
+                # Ejemplo de respuesta exitosa
+        "500":
+          description: Error interno del servidor.
+          content:
+            application/json:
+              example:
+                # Ejemplo de respuesta de error
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        # Propiedades del objeto User
