@@ -9,7 +9,7 @@ import { generateCartId } from "../utils/main.js";
 import { cartService } from "../services/carts.service.js";
 import { sessionsController } from "../controllers/sessions.controller.js";
 const LocalStrategy = local.Strategy;
-
+var urlApi = process.env.API_URL;
 export function iniPassport() {
   passport.use(
     "login",
@@ -57,14 +57,15 @@ export function iniPassport() {
       },
     ),
   );
-
   passport.use(
     "github",
     new GitHubStrategy(
       {
         clientID: process.env.GITHUB_CLIENTID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: "http://localhost:8080/api/sessions/githubcallback",
+        // callbackURL: "http://localhost:8080/api/sessions/githubcallback",
+        callbackURL: `${urlApi}api/sessions/githubcallback`,
+
       },
       async (accesToken, _, profile, done) => {
         try {
