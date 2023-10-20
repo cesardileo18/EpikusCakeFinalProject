@@ -57,7 +57,7 @@ export function iniPassport() {
       },
     ),
   );
-  var url = `${urlApi}api/sessions/githubcallback`
+  var url = `${urlApi}/api/sessions/githubcallback`
   passport.use(
     "github",
     new GitHubStrategy(

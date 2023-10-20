@@ -436,7 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (comprarButton) {
     comprarButton.addEventListener("click", async function () {
       const cartId = document.querySelector(".cartId").textContent;
-      console.log(cartId);
+      console.log('cartId',cartId);
       const totalCart = document.querySelector(".totalCart span").textContent;
       const user = userEmail;
   

@@ -76,7 +76,6 @@ class UserService {
     try {
       const thresholdDays = 2; // Establece el umbral de días en 2
       const currentDate = new Date().toISOString();
-      console.log('object2')
 
       // Encuentra a los usuarios inactivos que han estado inactivos durante más de dos días
       const deletedUsers = await usersModel.findInactiveUsers(thresholdDays, currentDate);

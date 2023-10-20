@@ -123,7 +123,6 @@ class UsersModel {
 
   async findInactiveUsers(thresholdDays, currentDate) {
     try {
-      console.log('object1')
       // Encuentra a los usuarios inactivos que han estado inactivos durante más de dos días
       const thresholdDate  = await UsersMongoose.find({
         last_connection: { $lt: subMinutes(currentDate, thresholdDays) },
